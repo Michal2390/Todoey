@@ -3,7 +3,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    let itemArray = ["Kocham Frania","Kocham Bartusia","Kocham Patryka","Kocham Antka","Kocham Adiego","Kocham Arka","Kocham Krzysia","Kocham profesora Dąbrowskiego"]
+    var itemArray = ["Kocham Frania","Kocham Bartusia","Kocham Patryka","Kocham Antka","Kocham Adiego","Kocham Arka","Kocham Krzysia","Kocham profesora Dąbrowskiego"]
     
     
     
@@ -42,15 +42,21 @@ class TodoListViewController: UITableViewController {
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
+        var textField = UITextField()
+        
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { UIAlertAction in
             // what will happen when the user clicks the Add Item Button
-            print("Success!")
+            self.itemArray.append(textField.text!)
+            //text is neva nil so thats why we need to force unwrap this textField shit
+            self.tableView.reloadData()
+            //reload data in order to  show this mafuckin' array because its hella buggy
         }
         alert.addTextField { alertTextField in
             alertTextField.placeholder = "Create new item"
-            print(alertTextField.text)
+            textField = alertTextField
+             
         }
         
         alert.addAction(action)
