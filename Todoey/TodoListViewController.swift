@@ -48,6 +48,11 @@ class TodoListViewController: UITableViewController {
             // what will happen when the user clicks the Add Item Button
             print("Success!")
         }
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "Create new item"
+            print(alertTextField.text)
+        }
+        
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
