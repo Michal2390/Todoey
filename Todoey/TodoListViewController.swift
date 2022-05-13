@@ -5,7 +5,7 @@ class TodoListViewController: UITableViewController {
 
     var itemArray = ["Kocham Frania","Kocham Bartusia","Kocham Patryka","Kocham Antka","Kocham Adiego","Kocham Arka","Kocham Krzysia","Kocham profesora Dąbrowskiego"]
     
-    
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,6 +13,10 @@ class TodoListViewController: UITableViewController {
             navigationController?.navigationBar.barTintColor = .systemCyan
         }
         view.backgroundColor = .systemBlue
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String]{
+            itemArray = items
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,6 +54,9 @@ class TodoListViewController: UITableViewController {
             // what will happen when the user clicks the Add Item Button
             self.itemArray.append(textField.text!)
             //text is neva nil so thats why we need to force unwrap this textField shit
+            
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
+            
             self.tableView.reloadData()
             //reload data in order to  show this mafuckin' array because its hella buggy
         }
