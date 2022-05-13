@@ -9,8 +9,12 @@ class TodoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.barTintColor = .systemPurple
-        
+        if #available(iOS 15.0, *) {
+            navigationController?.navigationBar.barTintColor = .systemCyan
+        } else {
+            // Fallback on earlier versions
+        }
+        view.backgroundColor = .systemBlue
         
     }
     
