@@ -17,7 +17,7 @@ class TodoListViewController: UITableViewController {
         if let items = defaults.array(forKey: "TodoListArray") as? [String]{
             itemArray = items
         }
-    }
+    } //fff
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
