@@ -6,7 +6,16 @@ class TodoListViewController: UITableViewController {
     var itemArray = [Item]()
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-   
+    
+    
+    var selectedCategory : Category? {
+        didSet{
+            loadItems()
+        }
+    }
+    
+    let context  = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,9 +24,9 @@ class TodoListViewController: UITableViewController {
         }
         view.backgroundColor = .systemBlue
         
-        
-        
+       
         print(dataFilePath)
+        
         
         let newItem = Item()
         newItem.title = "Kocham Frania "
@@ -61,7 +70,7 @@ class TodoListViewController: UITableViewController {
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
-        tableView.reloadData()
+        saveItems()
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -84,14 +93,9 @@ class TodoListViewController: UITableViewController {
             self.itemArray.append(newItem)
             //text is neva nil so thats why we need to force unwrap this textField shit
             
-            let encoder = PropertyListEncoder()
+            self.saveItems()
             
-            do {
-                let data = try encoder.encode(itemArray)
-                try data.write(to: self.dataFilePath!)
-            } catch {
-                print("Error encoding item array, \(error)")
-            }
+         
             
             self.tableView.reloadData()
             //reload data in order to  show this mafuckin' array because its hella buggy
@@ -107,5 +111,40 @@ class TodoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //MARK - Model Manipulation Methods
+    
+    func saveItems(){
+        
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(itemArray)
+            try data.write(to:  dataFilePath!)
+        } catch {
+            print("Error encoding item array, \(error)")
+        }
+
+        self.tableView.reloadData()
+    }
+    
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil){
+        
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+        if let additionalPredicate = predicate{
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
+        do{
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+        
+        tableView.reloadData()
+        
+    }
 }
 
