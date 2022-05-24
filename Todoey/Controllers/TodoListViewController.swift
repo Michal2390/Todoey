@@ -21,15 +21,17 @@ class TodoListViewController: UITableViewController {
         
         let newItem2 = Item()
         newItem2.title = "Kocham krzysia "
-        itemArray.append(newItem)
+        itemArray.append(newItem2)
       
         
         let newItem3 = Item()
         newItem3 .title = "Kocham bartusia "
-        itemArray.append(newItem)
+        itemArray.append(newItem3)
         
-        
-        
+        if let items = defaults.array(forKey: "TodoListArray") as? [Item]{
+            itemArray = items
+        }
+
     
     }
     
@@ -74,6 +76,7 @@ class TodoListViewController: UITableViewController {
             
             let newItem = Item()
             newItem.title = textField.text!
+            
             self.itemArray.append(newItem)
             //text is neva nil so thats why we need to force unwrap this textField shit
             
