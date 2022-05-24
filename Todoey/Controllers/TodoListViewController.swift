@@ -3,7 +3,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    var itemArray = ["Kocham Frania","Kocham Bartusia","Kocham Patryka","Kocham Antka","Kocham Adiego","Kocham Arka","Kocham Krzysia","Kocham profesora Dąbrowskiego"]
+    var itemArray = [Item]()
     
     let defaults = UserDefaults.standard
     
@@ -13,6 +13,25 @@ class TodoListViewController: UITableViewController {
             navigationController?.navigationBar.barTintColor = .systemCyan
         }
         view.backgroundColor = .systemBlue
+        
+        
+        let newItem = Item()
+        newItem.title = "Kocham Frania "
+        itemArray.append(newItem)
+        
+        let newItem2 = Item()
+        newItem2.title = "Kocham krzysia "
+        itemArray.append(newItem)
+      
+        
+        let newItem3 = Item()
+        newItem3 .title = "Kocham bartusia "
+        itemArray.append(newItem)
+        
+        
+        
+        
+        
         
 //        if let items = defaults.array(forKey: "TodoListArray") as? [String]{
 //            itemArray = items
@@ -27,7 +46,8 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        cell.textLabel?.text = itemArray[indexPath.row]
+        
+        cell.textLabel?.text = itemArray[indexPath.row].title
         
         return cell
     }
@@ -53,7 +73,10 @@ class TodoListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { UIAlertAction in
             // what will happen when the user clicks the Add Item Button
-            self.itemArray.append(textField.text!)
+            
+            let newItem = Item()
+            newItem.title = textField.text!
+            self.itemArray.append(newItem)
             //text is neva nil so thats why we need to force unwrap this textField shit
             
             self.defaults.set(self.itemArray, forKey: "TodoListArray")
