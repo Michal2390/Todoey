@@ -1,9 +1,12 @@
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
 
     var itemArray = [Item]()
+    
+    let context  = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
@@ -14,9 +17,7 @@ class TodoListViewController: UITableViewController {
         }
     }
     
-    let context  = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 15.0, *) {
@@ -28,7 +29,9 @@ class TodoListViewController: UITableViewController {
         print(dataFilePath)
         
         
-        let newItem = Item()
+        
+        
+        let newItem = Item(context: self.context)
         newItem.title = "Kocham Frania "
         itemArray.append(newItem)
         
@@ -89,7 +92,7 @@ class TodoListViewController: UITableViewController {
             
             let newItem = Item()
             newItem.title = textField.text!
-            
+            newItem.done = false
             self.itemArray.append(newItem)
             //text is neva nil so thats why we need to force unwrap this textField shit
             
@@ -115,36 +118,34 @@ class TodoListViewController: UITableViewController {
     
     func saveItems(){
         
-        let encoder = PropertyListEncoder()
         
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to:  dataFilePath!)
+            try context.save()
         } catch {
-            print("Error encoding item array, \(error)")
+           print("Error saving context \(context)")
         }
 
         self.tableView.reloadData()
     }
     
     func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil){
-        
-        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-        
-        if let additionalPredicate = predicate{
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-        } else {
-            request.predicate = categoryPredicate
-        }
-        
+
+//        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+
+//        if let additionalPredicate = predicate{
+//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+//        } else {
+//            request.predicate = categoryPredicate
+//        }
+
         do{
             itemArray = try context.fetch(request)
         } catch {
             print("Error fetching data from context \(error)")
         }
-        
+
         tableView.reloadData()
-        
+
     }
 }
 
