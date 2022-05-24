@@ -5,7 +5,7 @@ class TodoListViewController: UITableViewController {
 
     var itemArray = [Item]()
     
-    let defaults = UserDefaults.standard
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,6 +14,9 @@ class TodoListViewController: UITableViewController {
         }
         view.backgroundColor = .systemBlue
         
+        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+        
+        print(dataFilePath)
         
         let newItem = Item()
         newItem.title = "Kocham Frania "
