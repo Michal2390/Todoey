@@ -46,8 +46,7 @@ class TodoListViewController: UITableViewController {
         
         cell.textLabel?.text = item.title
         
-        cell.accessoryType = item.done == true ? .checkmark : .none
-        
+        cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
     }
