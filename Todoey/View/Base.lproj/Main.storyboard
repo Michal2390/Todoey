@@ -8,16 +8,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Category View Controller-->
         <scene sceneID="9Qq-pS-HEc">
             <objects>
-                <tableViewController id="PjL-kV-V74" sceneMemberID="viewController">
+                <tableViewController id="PjL-kV-V74" customClass="CategoryViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="77g-Pk-EbD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="RbP-KQ-cdq">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="RbP-KQ-cdq">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RbP-KQ-cdq" id="GDR-oE-m3R">
@@ -31,7 +31,14 @@
                             <outlet property="delegate" destination="PjL-kV-V74" id="HFQ-9N-aHL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="DEC-vL-8JZ"/>
+                    <navigationItem key="navigationItem" id="DEC-vL-8JZ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="I04-6Z-cSk">
+                            <color key="tintColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="PjL-kV-V74" id="3DU-95-i2g"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="S9Z-7s-Nnb" kind="show" identifier="goToItems" id="KOU-8e-bo7"/>
                     </connections>
