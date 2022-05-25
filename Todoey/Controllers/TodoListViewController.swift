@@ -128,7 +128,7 @@ class TodoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadItems(){
+    func loadItems(with request: NSFetchRequest<Item>){
 
         
     let request: NSFetchRequest<Item> = Item.fetchRequest()
@@ -165,12 +165,12 @@ extension TodoListViewController: UISearchBarDelegate {
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        
-        do{
-            itemArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context \(error)")
-        }
+        loadItems(with: request)
+//        do{
+//            itemArray = try context.fetch(request)
+//        } catch {
+//            print("Error fetching data from context \(error)")
+//        }
         
         tableView.reloadData()
         
