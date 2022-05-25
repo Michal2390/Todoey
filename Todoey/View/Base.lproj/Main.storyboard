@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Category View Controller-->
+        <!--Todoey-->
         <scene sceneID="9Qq-pS-HEc">
             <objects>
                 <tableViewController id="PjL-kV-V74" customClass="CategoryViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,7 +31,7 @@
                             <outlet property="delegate" destination="PjL-kV-V74" id="HFQ-9N-aHL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="DEC-vL-8JZ">
+                    <navigationItem key="navigationItem" title="Todoey" id="DEC-vL-8JZ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="I04-6Z-cSk">
                             <color key="tintColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -47,7 +47,7 @@
             </objects>
             <point key="canvasLocation" x="1097" y="130"/>
         </scene>
-        <!--Todoey-->
+        <!--Items-->
         <scene sceneID="oNf-6k-14h">
             <objects>
                 <tableViewController id="S9Z-7s-Nnb" customClass="TodoListViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -78,7 +78,7 @@
                             <outlet property="delegate" destination="S9Z-7s-Nnb" id="R3I-BZ-a3G"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todoey" id="B1H-C3-j4r">
+                    <navigationItem key="navigationItem" title="Items" id="B1H-C3-j4r">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="3PV-gW-N3a">
                             <color key="tintColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
