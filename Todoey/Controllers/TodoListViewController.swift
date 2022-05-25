@@ -2,7 +2,7 @@
 import UIKit
 import CoreData
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: UITableViewController, UISearchBarDelegate {
 
     var itemArray = [Item]()
     
@@ -10,6 +10,8 @@ class TodoListViewController: UITableViewController {
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
+    
+    searchBar.delegate = self
     
     var selectedCategory : Category? {
         didSet{
@@ -147,5 +149,8 @@ class TodoListViewController: UITableViewController {
         tableView.reloadData()
 
     }
+    
+    
+    
 }
 
