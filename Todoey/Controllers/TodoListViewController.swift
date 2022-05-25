@@ -25,8 +25,6 @@ class TodoListViewController: UITableViewController {
         }
         view.backgroundColor = .systemBlue
         
-       
-        print(dataFilePath)
         
         
         
