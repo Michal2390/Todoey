@@ -161,13 +161,10 @@ extension TodoListViewController: UISearchBarDelegate {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
         //[cd] means its case and diacritic insensitive, so it enables better searching
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-
-        request.predicate = predicate
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        request.sortDescriptors = [sortDescriptor]
         
         do{
             itemArray = try context.fetch(request)
