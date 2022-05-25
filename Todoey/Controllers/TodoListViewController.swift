@@ -2,7 +2,7 @@
 import UIKit
 import CoreData
 
-class TodoListViewController: UITableViewController, UISearchBarDelegate {
+class TodoListViewController: UITableViewController {
 
     var itemArray = [Item]()
     
@@ -11,7 +11,7 @@ class TodoListViewController: UITableViewController, UISearchBarDelegate {
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     
-    searchBar.delegate = self
+ 
     
     var selectedCategory : Category? {
         didSet{
@@ -51,7 +51,7 @@ class TodoListViewController: UITableViewController, UISearchBarDelegate {
     
     }
     
-    //MARK - Tableview Datasource Methods
+    //MARK: - Tableview Datasource Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
@@ -79,7 +79,7 @@ class TodoListViewController: UITableViewController, UISearchBarDelegate {
         
     }
     
-    //MARK - Add New Items
+    //MARK: - Add New Items
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -114,7 +114,7 @@ class TodoListViewController: UITableViewController, UISearchBarDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    //MARK - Model Manipulation Methods
+    //MARK: - Model Manipulation Methods
     
     func saveItems(){
         
@@ -150,7 +150,14 @@ class TodoListViewController: UITableViewController, UISearchBarDelegate {
 
     }
     
-    
-    
+   
 }
 
+//MARK: - Search Bar methods
+
+extension TodoListViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        <#code#>
+    }
+}
