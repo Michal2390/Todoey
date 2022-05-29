@@ -22,6 +22,7 @@ class CategoryViewController: UITableViewController {
     
     //pls why does it not run?
     // i pray for my abundance in programming...
+    //praying still
     
     
     //MARK: - TableView DataSource Methods
