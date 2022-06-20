@@ -30,7 +30,7 @@ class CategoryViewController: UITableViewController {
     //MARK: - TableView DataSource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return categories.count
     }
     
     
@@ -38,7 +38,7 @@ class CategoryViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         
-        let item = itemArray[indexPath.row]
+        let item = categories[indexPath.row]
         
         cell.textLabel?.text = item.title
         
@@ -63,7 +63,7 @@ class CategoryViewController: UITableViewController {
     func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
 
         do{
-            itemArray = try context.fetch(request)
+            categories = try context.fetch(request)
         } catch {
             print("Error fetching data from context \(error)")
         }
