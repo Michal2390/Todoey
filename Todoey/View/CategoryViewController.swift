@@ -66,7 +66,7 @@ class CategoryViewController: UITableViewController {
             print("Error fetching data from context \(error)")
         }
 
-        tableView.reloadData()
+        self.tableView.reloadData()
 
     }
     
