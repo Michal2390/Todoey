@@ -139,11 +139,6 @@ class TodoListViewController: UITableViewController {
             request.predicate = categoryPredicate
         }
         
-        
-//        let compundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categpryPredicate, predicate])
-//
-//        request.predicate = compundPredicate
-        
         do{
             itemArray = try context.fetch(request)
         } catch {
