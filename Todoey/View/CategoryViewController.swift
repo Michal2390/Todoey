@@ -44,27 +44,27 @@ class CategoryViewController: UITableViewController {
     }
     //MARK: - Data Manipulation Methods
 
-    func saveItems(){
+    func saveCategories(){
         
         
         do {
             try context.save()
         } catch {
-           print("Error saving context \(context)")
+           print("Error saving categry \(error)")
         }
 
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    func loadCategories(with request: NSFetchRequest<Category> = Category.fetchRequest()){
 
         do{
             categories = try context.fetch(request)
         } catch {
-            print("Error fetching data from context \(error)")
+            print("Error loading categories \(error)")
         }
 
-        self.tableView.reloadData()
+        tableView.reloadData()
 
     }
     
@@ -72,6 +72,28 @@ class CategoryViewController: UITableViewController {
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add new Category", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+            
+            let newCategory = Category(context: self.context)
+            newCategory.name = textField.text!
+            
+            self.categories.append(newCategory)
+            
+            self.saveCategories()
+            
+        }
+        
+        alert.addAction(action)
+        
+        alert.addTextField{ (field) in
+            textField = field
+            textField.placeholder = "Add a new Category"
+        }
+        present(alert, animated: true, completion: nil)
         
     }
     
