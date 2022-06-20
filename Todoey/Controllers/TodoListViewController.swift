@@ -93,6 +93,7 @@ class TodoListViewController: UITableViewController {
             let newItem = Item()
             newItem.title = textField.text!
             newItem.done = false
+            newItem.parentCategory = self.selectedCategory
             self.itemArray.append(newItem)
             //text is neva nil so thats why we need to force unwrap this textField shit
             
@@ -128,17 +129,14 @@ class TodoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil){
 
+        let categoryPredicate = NSPredicate(format: "parentCategory. name MATCHES %@", selectedCategory!.name!)
+
+        let compundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categpryPredicate, predicate])
         
-//        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-
-//        if let additionalPredicate = predicate{
-//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-//        } else {
-//            request.predicate = categoryPredicate
-//        }
-
+        request.predicate = compundPredicate
+        
         do{
             itemArray = try context.fetch(request)
         } catch {
@@ -160,11 +158,11 @@ extension TodoListViewController: UISearchBarDelegate {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
         //[cd] means its case and diacritic insensitive, so it enables better searching
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
 
     }
     
