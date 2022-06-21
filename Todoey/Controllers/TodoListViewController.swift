@@ -4,17 +4,15 @@ import CoreData
 
 class TodoListViewController: UITableViewController {
 
-    var itemArray = [Item]()
+    var itemArray: [Item] = []
     
     let context  = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     
- 
-    
     var selectedCategory : Category? {
-        didSet{
+        didSet {
             loadItems()
         }
     }
@@ -26,10 +24,6 @@ class TodoListViewController: UITableViewController {
             navigationController?.navigationBar.barTintColor = .systemCyan
         }
         view.backgroundColor = .systemBlue
-        
-        
-        
-        
         
         let newItem = Item(context: self.context)
         newItem.title = "Kocham Frania "
@@ -53,7 +47,7 @@ class TodoListViewController: UITableViewController {
     
     //MARK: - Tableview Datasource Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        itemArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -87,27 +81,25 @@ class TodoListViewController: UITableViewController {
         
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add Item", style: .default) { UIAlertAction in
-            // what will happen when the user clicks the Add Item Button
+        let action = UIAlertAction(title: "Add Item", style: .default) { [weak self] _ in
+            guard let self = self else { return }
             
-            let newItem = Item()
-            newItem.title = textField.text!
+            let newItem = Item(context: self.context)
+            newItem.title = textField.text
             newItem.done = false
             newItem.parentCategory = self.selectedCategory
             self.itemArray.append(newItem)
-            //text is neva nil so thats why we need to force unwrap this textField shit
             
             self.saveItems()
             
-         
-            
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             //reload data in order to  show this mafuckin' array because its hella buggy
         }
         alert.addTextField { alertTextField in
             alertTextField.placeholder = "Create new item"
             textField = alertTextField
-             
         }
         
         alert.addAction(action)
@@ -117,9 +109,7 @@ class TodoListViewController: UITableViewController {
     
     //MARK: - Model Manipulation Methods
     
-    func saveItems(){
-        
-        
+    func saveItems() {
         do {
             try context.save()
         } catch {
@@ -141,15 +131,13 @@ class TodoListViewController: UITableViewController {
         
         do{
             itemArray = try context.fetch(request)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         } catch {
             print("Error fetching data from context \(error)")
         }
-
-        tableView.reloadData()
-
     }
-    
-   
 }
 
 //MARK: - Search Bar methods
@@ -169,7 +157,7 @@ extension TodoListViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchBar.text?.count == 0 {
+        if searchBar.text?.isEmpty == true {
             loadItems()
             
             DispatchQueue.main.async {
