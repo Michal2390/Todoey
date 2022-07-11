@@ -24,19 +24,7 @@ class TodoListViewController: UITableViewController {
             navigationController?.navigationBar.barTintColor = .systemCyan
         }
         view.backgroundColor = .systemBlue
-        
-        let newItem = Item(context: self.context)
-        newItem.title = "Kocham Frania "
-        itemArray.append(newItem)
-        
-        let newItem2 = Item()
-        newItem2.title = "Kocham krzysia "
-        itemArray.append(newItem2)
-      
-        
-        let newItem3 = Item()
-        newItem3 .title = "Kocham bartusia "
-        itemArray.append(newItem3)
+       
         
 //        if let items = defaults.array(forKey: "TodoListArray") as? [Item]{
 //            itemArray = items
